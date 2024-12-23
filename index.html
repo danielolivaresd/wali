@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>WhatsApp Link Generator</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.0.2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100">
+  <div class="container mx-auto p-4">
+    <h1 class="text-2xl font-bold mb-4">WhatsApp Link Generator</h1>
+    <form id="form" class="mb-4">
+      <div class="flex flex-col mb-4">
+        <label for="phone_number" class="mb-2">Phone Number</label>
+        <input type="text" id="phone_number" name="phone_number" class="p-2 border border-gray-300 rounded">
+      </div>
+      <div class="flex flex-col mb-4">
+        <label for="prefix" class="mb-2">Prefix</label>
+        <input type="text" id="prefix" name="prefix" class="p-2 border border-gray-300 rounded" value="+52">
+      </div>
+    </form>
+    <div id="output" class="bg-gray-200 p-4 rounded">
+      <p class="mb-2">Link
+        <a id="link" href="" target="_blank" class="text-blue-500"></a>
+      </p>
+    </div>
+  </div>
+  <script>
+    document.getElementById('form').addEventListener('input', function (event) {
+      event.preventDefault();
+      const phone_number = document.getElementById('phone_number').value.replace(/\D/g, '');
+      const prefix = document.getElementById('prefix').value;
+      const link = `https://wa.me/${prefix}${phone_number}`;
+      document.getElementById('link').href = link;
+      document.getElementById('link').textContent = link;
+    });
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const phone_number = urlParams.get('phone_number');
+    const prefix = urlParams.get('prefix');
+    if (phone_number) {
+      document.getElementById('phone_number').value = phone_number;
+    }
+    if (prefix) {
+      document.getElementById('prefix').value = prefix;
+    }
+
+    // Simulate form input event
+    document.getElementById('form').dispatchEvent(new Event('input'));
+  </script>
+</body>
+</html>
